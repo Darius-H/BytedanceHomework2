@@ -40,11 +40,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             tvtime = v.findViewById(R.id.tv_time);
             im_source=v.findViewById(R.id.im_head);
         }
-
+        public static int getResId(String variableName, Class<?> c) {
+            try {
+                Field idField = c.getDeclaredField(variableName);
+                return idField.getInt(idField);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
+        }
         public void onBind(int position, TestData data) {
             tvname.setText(data.name);
             tvmessage.setText(data.message);
             tvtime.setText(data.time);
+            int id = MyViewHolder.getResId(data.im_source, R.drawable.class);
+            im_source.setImageResource(id);
             //无法实现动态画图，getResources()不能用，不知道如何解决
         }
         //initView中有：mAdapter.setOnItemClickListener(this);
